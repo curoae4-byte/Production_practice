@@ -40,4 +40,4 @@ npm run preview  # предпросмотр сборки
 - Сборка: результат лежит в папке `dist/`
 
 ## Брендбук
-- [brand_book_v1.0.pdf](brand_book/brand_book_v1.0.pdf)
+- [brand_book_v1.0.pdf](brand_book_v1.0.pdf)
