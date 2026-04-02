@@ -7,19 +7,49 @@ import LayoutGridOverlay from './components/LayoutGridOverlay'
 import FpsOverlay from './components/FpsOverlay'
 import './index.css'
 
-// точка входа: роутинг + глобальные оверлеи 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+function isTypingTarget(target: EventTarget | null) {
+  const t = target as HTMLElement | null
+  if (!t) return false
+  return t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable
+}
+
+function Root() {
+  const [debugOverlaysVisible, setDebugOverlaysVisible] = React.useState(false)
+
+  React.useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() !== 'l') return
+      if (isTypingTarget(e.target)) return
+      e.preventDefault()
+      setDebugOverlaysVisible((v) => !v)
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [])
+
+  return (
     <BrowserRouter>
       <>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/portfolio" element={<PortfolioWorksPage />} />
         </Routes>
-        {/* служебные штуки поверх всего */}
-        <LayoutGridOverlay />
-        <FpsOverlay />
+        {/* Служебные оверлеи: скрыть/показать клавишей L */}
+        {debugOverlaysVisible && (
+          <>
+            <LayoutGridOverlay />
+            <FpsOverlay />
+          </>
+        )}
       </>
     </BrowserRouter>
+  )
+}
+
+// точка входа: роутинг + глобальные оверлеи 
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <Root />
   </React.StrictMode>,
 )

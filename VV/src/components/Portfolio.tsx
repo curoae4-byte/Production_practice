@@ -67,13 +67,13 @@ const ProjectCard = ({
       <div className="absolute inset-0 z-10 bg-black/40 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity" />
 
       <div
-        className="absolute inset-0 z-20 flex flex-col justify-end p-5 sm:p-6 md:p-8 bg-gradient-to-t from-black via-black/55 to-transparent"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-center p-5 text-center sm:p-6 md:p-8 bg-gradient-to-t from-black via-black/55 to-transparent"
         style={{ transform: 'translateZ(48px)' }}
       >
         <p className="font-['Bounded'] font-light text-[10px] uppercase tracking-[0.28em] text-white mb-2 sm:mb-3">
           {project.category}
         </p>
-        <h3 className="max-w-full font-bounded uppercase text-white group-hover:text-[#EB0000] transition-colors leading-[0.95] break-words text-[clamp(1.35rem,4.4vw,3.15rem)] sm:text-[clamp(1.55rem,3.6vw,3.35rem)]">
+        <h3 className="max-w-full font-bounded uppercase text-white group-hover:text-[#EB0000] transition-colors leading-[0.95] break-words text-[clamp(1.1rem,3.4vw,2.35rem)] sm:text-[clamp(1.25rem,2.9vw,2.65rem)]">
           {project.title}
         </h3>
       </div>
