@@ -35,9 +35,11 @@ npm run preview  # предпросмотр сборки
 - `src/data/worksProjects.ts` — данные карточек работ
 
 ## Примечания
-
-- Фавикон: `icons/favicon.svg` (подключён в `index.html`)
+- Документы с отчетом, индивидуальном задании в папке docs
+- Папка с проектом называется VV
+- Фавикон: `icons/favicon.svg` 
 - Сборка: результат лежит в папке `dist/`
 
 ## Брендбук
 - [brand_book_v1.0.pdf](brand_book_v1.0.pdf)
+- [Электронный-вариант](https://www.calameo.com/books/00819249435aac4168eb2?authid=7pIxxDsrqsGV)
