@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { Instagram, Youtube, ArrowUpRight } from 'lucide-react'
 import { PageShell } from './PageShell'
@@ -50,6 +50,32 @@ const Footer = () => {
   const [glassesTilt, setGlassesTilt] = useState({ rotateX: 0, rotateY: 0, rotateZ: 0, scale: 1 })
   const clearTimersRef = useRef<number[]>([])
   const tiltResetTimerRef = useRef<number | null>(null)
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleFooterNavClick = (sectionId?: string) => {
+    if (!sectionId) return
+
+    if (location.pathname === '/') {
+      const target = document.getElementById(sectionId)
+      if (!target) return
+      
+      const targetEl = target.closest('.pin-spacer') || target;
+      let top = targetEl.getBoundingClientRect().top + window.scrollY;
+      
+      if (sectionId !== 'about') {
+        const headerOffset = 100
+        top -= headerOffset
+      }
+      
+      window.scrollTo({ top, behavior: 'smooth' })
+      return
+    }
+
+    sessionStorage.setItem('vv-scroll-target', sectionId)
+    sessionStorage.setItem('vv-nav-from-internal', 'true')
+    navigate('/')
+  }
 
   const triggerGlassesWords = (event: MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect()
@@ -107,7 +133,7 @@ const Footer = () => {
   }, [])
 
   return (
-    <footer className="relative bg-[#080808] border-t border-white/5 pt-20 sm:pt-24 lg:pt-32 pb-10 sm:pb-12 z-10" id="contact">
+    <footer className="relative bg-[#080808] border-t border-[#F5F7F6]/5 pt-20 sm:pt-24 lg:pt-32 pb-10 sm:pb-12 z-10" id="contact">
       <PageShell>
         {/* основной контент футера */}
         {/* md: бренд на всю ширину (md:col-span-2), иначе навигация лезет в колонку рядом с гигантским лого */}
@@ -118,7 +144,7 @@ const Footer = () => {
               <span className="block whitespace-nowrap">VALERY</span>
               <span className="block whitespace-nowrap">VISUALS</span>
             </h2>
-            <p className="max-w-md text-white/40 font-['Bounded'] font-light text-sm sm:text-base lg:text-lg leading-relaxed mb-8 sm:mb-10 lg:mb-12 uppercase tracking-[0.12em] sm:tracking-[0.28em] break-words">
+            <p className="max-w-md text-[#F5F7F6]/40 font-['Bounded'] font-light text-sm sm:text-base lg:text-lg leading-relaxed mb-8 sm:mb-10 lg:mb-12 uppercase tracking-[0.12em] sm:tracking-[0.28em] break-words">
               Продюсерский центр контента, где эстетика встречается с результатом.
             </p>
             
@@ -130,7 +156,7 @@ const Footer = () => {
                   aria-label="Instagram"
                   whileHover={{ y: -5 }}
                   transition={{ type: 'spring', stiffness: 420, damping: 28 }}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 text-white transition-[color,border-color] duration-200 ease-out hover:border-[#EB0000] hover:text-[#EB0000] sm:h-12 sm:w-12"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#F5F7F6]/10 text-[#F5F7F6] transition-[color,border-color] duration-200 ease-out hover:border-[#E10600] hover:text-[#E10600] sm:h-12 sm:w-12"
                 >
                   <Instagram size={18} className="sm:h-5 sm:w-5" />
                 </motion.a>
@@ -147,7 +173,7 @@ const Footer = () => {
                   aria-label={label}
                   whileHover={{ y: -5 }}
                   transition={{ type: 'spring', stiffness: 420, damping: 28 }}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 text-white transition-[color,border-color] duration-200 ease-out hover:border-[#EB0000] hover:text-[#EB0000] sm:h-12 sm:w-12"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#F5F7F6]/10 text-[#F5F7F6] transition-[color,border-color] duration-200 ease-out hover:border-[#E10600] hover:text-[#E10600] sm:h-12 sm:w-12"
                 >
                   <Icon size={18} className="sm:w-5 sm:h-5 text-inherit" />
                 </motion.a>
@@ -157,17 +183,20 @@ const Footer = () => {
 
           {/* навигация — на md стоит рядом с контактами */}
           <div className="flex flex-col gap-6 sm:gap-8 min-w-0">
-            <span className="text-[10px] font-['Bounded'] font-light uppercase tracking-[0.35em] sm:tracking-[0.5em] text-[#EB0000]">Navigation</span>
+            <span className="text-[10px] font-['Bounded'] font-light uppercase tracking-[0.35em] sm:tracking-[0.5em] text-[#E10600]">НАВИГАЦИЯ</span>
             <ul className="flex flex-col gap-3 sm:gap-4 font-bounded text-base sm:text-lg md:text-xl uppercase tracking-tighter">
               {[
-                { label: 'О нас', to: '/#services' },
+                { label: 'О нас', to: '/', sectionId: 'about' },
                 { label: 'Работы', to: '/portfolio' },
-                { label: 'Связь', to: '/#contact' },
+                { label: 'Связь', to: '/', sectionId: 'contact' },
               ].map((item) => (
-                <li key={item.label} className="group overflow-hidden h-8">
-                  <Link to={item.to} className="flex flex-col transition-transform duration-500 ease-expo group-hover:-translate-y-8">
-                    <span>{item.label}</span>
-                    <span className="text-[#EB0000]">{item.label}</span>
+                <li key={item.label}>
+                  <Link
+                    to={item.to}
+                    onClick={() => handleFooterNavClick(item.sectionId)}
+                    className="inline-flex py-1 text-[#F5F7F6] transition-colors duration-300 hover:text-[#E10600]"
+                  >
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -176,36 +205,36 @@ const Footer = () => {
 
           {/* контакты */}
           <div className="flex flex-col gap-6 sm:gap-8 min-w-0">
-            <span className="text-[10px] font-['Bounded'] font-light uppercase tracking-[0.35em] sm:tracking-[0.5em] text-[#EB0000]">Let's Talk</span>
+            <span className="text-[10px] font-['Bounded'] font-light uppercase tracking-[0.35em] sm:tracking-[0.5em] text-[#E10600]">ПООБЩАЕМСЯ?</span>
             <div className="flex flex-col gap-4 sm:gap-6 min-w-0">
               <a
                 href="mailto:hello@valeryvisuals.com"
                 className="group relative flex w-full min-w-0 max-w-full items-start gap-3 sm:gap-4 overflow-visible"
               >
                 {/* Почта: намеренный разрыв по @ + лёгкий наклон — без «ломаного» переноса посередине домена */}
-                <div className="inline-block min-w-0 max-w-[calc(100%-2rem)] origin-left -rotate-[3.5deg] border-l-2 border-[#EB0000]/45 pl-3 sm:pl-4 py-1 transition-[border-color,transform] duration-300 ease-out group-hover:-rotate-2 group-hover:border-[#EB0000]">
-                  <span className="block font-['Bounded'] font-light uppercase tracking-[0.18em] sm:tracking-[0.22em] text-[clamp(0.66rem,2.6vw,0.98rem)] text-white leading-[1.15] transition-colors group-hover:text-[#EB0000]">
+                <div className="inline-block min-w-0 max-w-[calc(100%-2rem)] origin-left -rotate-[3.5deg] border-l-2 border-[#E10600]/45 pl-3 sm:pl-4 py-1 transition-[border-color,transform] duration-300 ease-out group-hover:-rotate-2 group-hover:border-[#E10600]">
+                  <span className="block font-['Bounded'] font-light uppercase tracking-[0.18em] sm:tracking-[0.22em] text-[clamp(0.66rem,2.6vw,0.98rem)] text-[#F5F7F6] leading-[1.15] transition-colors group-hover:text-[#E10600]">
                     hello@
                   </span>
-                  <span className="block font-['Bounded'] font-light uppercase tracking-[0.12em] sm:tracking-[0.16em] text-[clamp(0.62rem,2.35vw,0.92rem)] text-white/90 leading-[1.2] transition-colors group-hover:text-[#EB0000]">
+                  <span className="block font-['Bounded'] font-light uppercase tracking-[0.12em] sm:tracking-[0.16em] text-[clamp(0.62rem,2.35vw,0.92rem)] text-[#F5F7F6]/90 leading-[1.2] transition-colors group-hover:text-[#E10600]">
                     valeryvisuals.com
                   </span>
                 </div>
                 <ArrowUpRight
                   size={20}
-                  className="mt-1 shrink-0 text-white/50 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 group-hover:text-[#EB0000]"
+                  className="mt-1 shrink-0 text-[#F5F7F6]/50 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 group-hover:text-[#E10600]"
                 />
               </a>
-              <p className="text-white/40 font-['Bounded'] font-light text-xs sm:text-sm uppercase tracking-[0.12em] sm:tracking-widest leading-relaxed break-words">
-                мы везде <br />
-                мы все видим
+              <p className="text-[#F5F7F6]/40 font-['Bounded'] font-light text-xs sm:text-sm uppercase tracking-[0.12em] sm:tracking-widest leading-relaxed break-words">
+                мы везде. <br />
+                мы все видим.
               </p>
             </div>
           </div>
         </div>
 
         {/* плашки/бейджи */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 py-8 sm:py-10 lg:py-12 border-y border-white/5 mb-10 sm:mb-12 grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 py-8 sm:py-10 lg:py-12 border-y border-[#F5F7F6]/5 mb-10 sm:mb-12 grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
           {['PRIZZZ', 'NAGRADA', 'necmotri', 'ladno'].map((award) => (
             <div key={award} className="flex items-center justify-center text-[9px] sm:text-[10px] font-['Bounded'] font-light tracking-[0.18em] sm:tracking-[0.3em] uppercase text-center">
               {award}
@@ -266,7 +295,7 @@ const Footer = () => {
             {clickFxId > 0 && (
               <motion.span
                 key={clickFxId}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/35"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#F5F7F6]/35"
                 style={{ x: clickPoint.x, y: clickPoint.y }}
                 initial={{ opacity: 0.8, scale: 0.35 }}
                 animate={{ opacity: 0, scale: 3.1 }}
@@ -277,7 +306,7 @@ const Footer = () => {
             {popWords.map((word) => (
               <motion.span
                 key={word.id}
-                className="pointer-events-none absolute left-1/2 top-1/2 font-['Bounded'] font-light uppercase text-white/90 text-xs sm:text-sm tracking-[0.18em] sm:tracking-[0.26em] whitespace-nowrap"
+                className="pointer-events-none absolute left-1/2 top-1/2 font-['Bounded'] font-light uppercase text-[#F5F7F6]/90 text-xs sm:text-sm tracking-[0.18em] sm:tracking-[0.26em] whitespace-nowrap"
                 style={{ x: word.x, y: word.y }}
                 initial={{ opacity: 0, scale: 0.35, filter: 'blur(6px)' }}
                 animate={{ opacity: [0, 1, 0], scale: [0.35, 1, 0.92], y: [word.y, word.y - 16, word.y - 26], rotate: [word.rotate, word.rotate + 6, word.rotate - 4], filter: ['blur(6px)', 'blur(0px)', 'blur(3px)'] }}
@@ -290,14 +319,15 @@ const Footer = () => {
         </div>
 
         {/* нижняя строка */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-5 sm:gap-8 text-[9px] sm:text-[10px] font-['Bounded'] font-light uppercase tracking-[0.12em] sm:tracking-[0.3em] text-white/20 text-center md:text-left">
-          <p className="break-words">© {currentYear} VALERY VISUALS. ALL RIGHTS RESERVED.</p>
-          <div className="flex flex-wrap justify-center gap-5 sm:gap-8">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-5 sm:gap-8 text-[9px] sm:text-[10px] font-['Bounded'] font-light uppercase tracking-[0.12em] sm:tracking-[0.3em] text-[#F5F7F6]/20 text-center md:text-left">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
+            <p className="break-words">© {currentYear} VALERY VISUALS.</p>
+            <Link to="/cookie-policy" className="hover:text-[#F5F7F6] transition-colors underline underline-offset-4 decoration-[#F5F7F6]/20 hover:decoration-[#F5F7F6]">
+              Политика Cookie
+            </Link>
           </div>
           <p className="flex items-center gap-2">
-            DESIGNED BY <span className="text-[#EB0000] opacity-100">lipa</span>
+            ЗАДИЗАЙНЕНО И СДЕЛАНО <span className="text-[#E10600] opacity-100">lipa</span>
           </p>
         </div>
       </PageShell>

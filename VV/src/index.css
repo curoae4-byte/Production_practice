@@ -1,24 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --font-akony: "Akony";
-}
-
-@font-face {
-  font-family: "Akony";
-  src: url("../font/AKONY.ttf") format("truetype");
-  font-display: swap;
-  font-style: normal;
-  font-weight: 400;
+  --font-bounded: "Bounded", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --color-primary: #E10600;
+  --color-background: #080808;
+  --color-text: #F5F7F6;
 }
 
 :root {
-  font-family: var(--font-montserrat);
+  font-family: var(--font-bounded);
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: dark;
-  color: #FFFFFF;
+  color: #F5F7F6;
   background-color: #080808;
 
   font-synthesis: none;
@@ -35,17 +30,41 @@ body {
   background-color: #080808;
 }
 
+/* Кастомный курсор: скрываем системный на устройствах с мышью */
+@media (pointer: fine) {
+  html, body, body * {
+    cursor: none !important;
+  }
+}
+
+
+.cursor-fx {
+  transition: opacity 0.18s ease;
+}
+
+body.video-modal-open .cursor-fx {
+  opacity: 0;
+}
+
+@media (pointer: fine) {
+  body.video-modal-open,
+  body.video-modal-open * {
+    cursor: auto !important;
+  }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-bounded);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  font-weight: 400;
 }
 
-@theme {
-  --color-primary: #EB0000;
-  --color-background: #080808;
-  --color-text: #FFFFFF;
+h1 {
+  font-weight: 900 !important;
+}
+
+h2 {
+  font-weight: 900;
 }
 
 /* Lenis smooth scroll  */
@@ -92,7 +111,7 @@ html.lenis, html.lenis body {
 /* Custom brand scrollbar */
 html {
   scrollbar-width: thin;
-  scrollbar-color: #eb0000 #080808;
+  scrollbar-color: #E10600 #080808;
 }
 
 body::-webkit-scrollbar {
@@ -104,7 +123,7 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ff2b2b 0%, #eb0000 45%, #9b0000 100%);
+  background: linear-gradient(180deg, #ff2b2b 0%, #E10600 45%, #9b0000 100%);
   border-radius: 999px;
   border: 2px solid #080808;
 }

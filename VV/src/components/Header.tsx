@@ -1,17 +1,46 @@
 import { useEffect, useId, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { PageShell } from './PageShell'
 
 const NAV = [
-  { label: 'О НАС', to: '/#services' },
-  { label: 'РАБОТЫ', to: '/portfolio' },
-  { label: 'СВЯЗЬ', to: '/#contact' },
+  { label: 'О НАС', to: '/', sectionId: 'about' },
+  { label: 'РАБОТЫ', to: '/portfolio', sectionId: undefined },
+  { label: 'СВЯЗЬ', to: '/', sectionId: 'contact' },
 ] as const
 
 const Header = () => {
   const [open, setOpen] = useState(false)
   const menuId = useId()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleNavClick = (sectionId?: string) => {
+    setOpen(false)
+
+    if (!sectionId) return
+
+    if (location.pathname === '/') {
+      const target = document.getElementById(sectionId)
+      if (!target) return
+      
+      // Находим родительский spacer, если блок запинен GSAP
+      const targetEl = target.closest('.pin-spacer') || target;
+      let top = targetEl.getBoundingClientRect().top + window.scrollY;
+      
+      if (sectionId !== 'about') {
+        const headerOffset = 100
+        top -= headerOffset
+      }
+      
+      window.scrollTo({ top, behavior: 'smooth' })
+      return
+    }
+
+    sessionStorage.setItem('vv-scroll-target', sectionId)
+    sessionStorage.setItem('vv-nav-from-internal', 'true')
+    navigate('/')
+  }
 
   useEffect(() => {
     if (!open) return
@@ -73,8 +102,8 @@ const Header = () => {
                   >
                     <Link
                       to={item.to}
-                      onClick={() => setOpen(false)}
-                      className="font-bounded text-3xl uppercase tracking-tighter text-white transition-colors hover:text-[#EB0000] sm:text-4xl"
+                      onClick={() => handleNavClick(item.sectionId)}
+                      className="font-bounded text-3xl uppercase tracking-tighter text-[#F5F7F6] transition-colors hover:text-[#E10600] sm:text-4xl"
                     >
                       {item.label}
                     </Link>
@@ -97,7 +126,7 @@ const Header = () => {
           <div className="relative w-[60px] h-[47px] sm:w-[70px] sm:h-[55px] lg:w-[80px] lg:h-[63px] flex items-center justify-center overflow-visible">
             <svg width="80" height="63" viewBox="0 0 381 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full transition-all duration-500 group-hover:scale-110">
               <path d="M341 0H41V300H341V0Z" fill="transparent"/>
-              <path fillRule="evenodd" clipRule="evenodd" d="M10.0263 150C10.0263 133.792 21.5088 120.154 37.7935 110.842C54.2057 101.458 76.4116 95.8462 100.263 95.8462C127.696 95.8462 151.676 102.981 168.089 115.292C176.062 121.274 182.212 125.385 190.5 125.385C198.788 125.385 204.938 121.274 212.911 115.292C229.324 102.981 253.304 95.8462 280.737 95.8462C304.589 95.8462 326.795 101.458 343.207 110.842C359.492 120.154 370.974 133.792 370.974 150C370.974 166.208 359.492 179.846 343.207 189.158C326.795 198.542 304.589 204.154 280.737 204.154C253.304 204.154 229.324 197.019 212.911 184.708C205.399 179.072 198.422 174.916 190.5 174.619C182.578 174.916 175.601 179.072 168.089 184.708C151.676 197.019 127.696 204.154 100.263 204.154C76.4116 204.154 54.2057 198.542 37.7935 189.158C21.5088 179.846 10.0263 166.208 10.0263 150ZM170.447 150C170.447 170.493 138.889 186.431 100.263 186.431C61.6369 186.431 30.0789 170.636 30.0789 150.143C30.0789 129.65 61.6369 113.569 100.263 113.569C138.889 113.569 170.447 129.507 170.447 150ZM210.553 150C210.553 170.493 242.111 186.431 280.737 186.431C319.363 186.431 350.921 170.636 350.921 150.143C350.921 129.65 319.363 113.569 280.737 113.569C242.111 113.569 210.553 129.507 210.553 150Z" fill="white" className="group-hover:fill-[#EB0000] transition-colors duration-500"/>
+              <path fillRule="evenodd" clipRule="evenodd" d="M10.0263 150C10.0263 133.792 21.5088 120.154 37.7935 110.842C54.2057 101.458 76.4116 95.8462 100.263 95.8462C127.696 95.8462 151.676 102.981 168.089 115.292C176.062 121.274 182.212 125.385 190.5 125.385C198.788 125.385 204.938 121.274 212.911 115.292C229.324 102.981 253.304 95.8462 280.737 95.8462C304.589 95.8462 326.795 101.458 343.207 110.842C359.492 120.154 370.974 133.792 370.974 150C370.974 166.208 359.492 179.846 343.207 189.158C326.795 198.542 304.589 204.154 280.737 204.154C253.304 204.154 229.324 197.019 212.911 184.708C205.399 179.072 198.422 174.916 190.5 174.619C182.578 174.916 175.601 179.072 168.089 184.708C151.676 197.019 127.696 204.154 100.263 204.154C76.4116 204.154 54.2057 198.542 37.7935 189.158C21.5088 179.846 10.0263 166.208 10.0263 150ZM170.447 150C170.447 170.493 138.889 186.431 100.263 186.431C61.6369 186.431 30.0789 170.636 30.0789 150.143C30.0789 129.65 61.6369 113.569 100.263 113.569C138.889 113.569 170.447 129.507 170.447 150ZM210.553 150C210.553 170.493 242.111 186.431 280.737 186.431C319.363 186.431 350.921 170.636 350.921 150.143C350.921 129.65 319.363 113.569 280.737 113.569C242.111 113.569 210.553 129.507 210.553 150Z" fill="white" className="group-hover:fill-[#E10600] transition-colors duration-500"/>
             </svg>
           </div>
         </Link>
@@ -108,12 +137,10 @@ const Header = () => {
             <Link
               key={item.label}
               to={item.to}
-              className="group relative h-6 overflow-hidden"
+              onClick={() => handleNavClick(item.sectionId)}
+              className="inline-flex py-1 text-[#F5F7F6] transition-colors duration-300 hover:text-[#E10600]"
             >
-              <div className="flex flex-col transition-transform duration-500 ease-expo group-hover:-translate-y-6">
-                <span>{item.label}</span>
-                <span className="text-[#EB0000]">{item.label}</span>
-              </div>
+              {item.label}
             </Link>
           ))}
         </nav>
@@ -121,7 +148,7 @@ const Header = () => {
         {/* Бургер — поверх оверлея (z-10 у PageShell) */}
         <button
           type="button"
-          className="relative z-20 md:hidden -m-1.5 flex shrink-0 items-center justify-center p-2 text-white transition-opacity hover:opacity-70 active:opacity-55"
+          className="relative z-20 md:hidden -m-1.5 flex shrink-0 items-center justify-center p-2 text-[#F5F7F6] transition-opacity hover:opacity-70 active:opacity-55"
           aria-expanded={open}
           aria-controls={menuId}
           aria-label={open ? 'Закрыть меню' : 'Открыть меню'}

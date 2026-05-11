@@ -144,6 +144,15 @@ const Hero = () => {
         className="sticky top-0 h-[100svh] w-full flex items-center justify-center overflow-hidden pt-20 sm:pt-24 lg:pt-28"
         style={{ perspective: '900px' }}
       >
+        {/* углы «видоискателя» в пределах общего контейнера страницы */}
+        <div className="pointer-events-none absolute inset-0 z-[3] flex justify-center" aria-hidden>
+          <div className="relative h-full w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="absolute left-2 top-[5.25rem] h-8 w-8 border-l-2 border-t-2 border-[#F5F7F6]/90 sm:left-3 sm:top-[5.75rem] sm:h-9 sm:w-9 md:left-4 md:top-24" />
+            <div className="absolute right-2 top-[5.25rem] h-8 w-8 border-r-2 border-t-2 border-[#F5F7F6]/90 sm:right-3 sm:top-[5.75rem] sm:h-9 sm:w-9 md:right-4 md:top-24" />
+            <div className="absolute bottom-24 left-2 h-8 w-8 border-b-2 border-l-2 border-[#F5F7F6]/90 sm:bottom-28 sm:left-3 sm:h-9 sm:w-9 md:bottom-32 md:left-4" />
+            <div className="absolute bottom-24 right-2 h-8 w-8 border-b-2 border-r-2 border-[#F5F7F6]/90 sm:bottom-28 sm:right-3 sm:h-9 sm:w-9 md:bottom-32 md:right-4" />
+          </div>
+        </div>
 
         {/* слой очков — наклон от мыши + масштаб по скроллу */}
         <div
@@ -255,22 +264,22 @@ const Hero = () => {
             style={{ opacity: 0, transform: 'translateY(36px)' }}
           >
           <div className="mb-8">
-            <h1 className="text-[clamp(1.9rem,9.8vw,6rem)] xl:text-[7rem] font-bounded tracking-tight sm:tracking-tighter leading-[0.93] mb-4 text-white [perspective:800px] break-normal">
+            <h1 className="text-[clamp(1.9rem,9.8vw,6rem)] xl:text-[7rem] font-bounded font-black tracking-tight sm:tracking-tighter leading-[0.93] mb-4 text-[#F5F7F6] [perspective:800px] break-normal">
               <span className="block overflow-hidden">
-                <span className="hero-title-line block whitespace-nowrap [transform-origin:50%_100%] will-change-transform">
-                  VALERY
+                <span className="hero-title-line block whitespace-nowrap font-black [transform-origin:50%_100%] will-change-transform">
+                  <span className="inline-block [transform:scaleX(1.18)]">VALERY</span>
                 </span>
               </span>
               <span className="block overflow-hidden">
-                <span className="hero-title-line block whitespace-nowrap [transform-origin:50%_100%] will-change-transform">
-                  VISUALS
+                <span className="hero-title-line block whitespace-nowrap font-black [transform-origin:50%_100%] will-change-transform">
+                  <span className="inline-block [transform:scaleX(1.18)]">VISUALS</span>
                 </span>
               </span>
             </h1>
 
-            <p className="hero-subtitle text-[12px] sm:text-base md:text-xl lg:text-2xl font-['Bounded'] font-light uppercase tracking-[0.12em] sm:tracking-[0.24em] text-white/70 max-w-3xl mx-auto px-1 break-normal">
+            <p className="hero-subtitle text-[12px] sm:text-base md:text-xl lg:text-2xl font-['Bounded'] font-light uppercase tracking-[0.12em] sm:tracking-[0.24em] text-[#F5F7F6]/70 max-w-3xl mx-auto px-1 break-normal">
               Продюсерский центр контента. <br />
-              <span className="text-[#EB0000]">СТИЛЬ. ЦИФРЫ. ПРОВОКАЦИЯ.</span>
+              <span className="text-[#E10600]">СТИЛЬ. ЦИФРЫ. ПРОВОКАЦИЯ.</span>
             </p>
           </div>
           </div>
@@ -283,7 +292,7 @@ const Hero = () => {
           transition={{ delay: 1.2, duration: 1.2, ease: 'easeOut' }}
           className="absolute bottom-4 sm:bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center"
         >
-          <span className="mb-2 sm:mb-3 text-[9px] sm:text-[10px] uppercase tracking-[0.22em] sm:tracking-[0.28em] font-medium text-white/55">
+          <span className="mb-2 sm:mb-3 text-[9px] sm:text-[10px] uppercase tracking-[0.22em] sm:tracking-[0.28em] font-medium text-[#F5F7F6]/55">
             Поскроль ;)
           </span>
           <motion.div
@@ -304,7 +313,7 @@ const Hero = () => {
             >
               <path
                 d="M12 2V20M12 20L5 13M12 20L19 13"
-                stroke="#EB0000" strokeWidth="2.2"
+                stroke="#E10600" strokeWidth="2.2"
                 strokeLinecap="round" strokeLinejoin="round"
               />
             </svg>

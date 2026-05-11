@@ -7,7 +7,7 @@ import { Fragment, type ReactNode } from 'react'
 export function highlightWords(
   text: string,
   words: string[],
-  accentClass = 'text-[#EB0000]'
+  accentClass = 'text-[#E10600]'
 ): ReactNode {
   if (!words.length) return text
 

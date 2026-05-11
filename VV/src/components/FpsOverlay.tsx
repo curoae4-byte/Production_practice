@@ -92,7 +92,7 @@ export default function FpsOverlay() {
   const fpsColor = useMemo(() => {
     if (fps >= 55) return 'text-emerald-300'
     if (fps >= 40) return 'text-amber-300'
-    return 'text-[#EB0000]'
+    return 'text-[#E10600]'
   }, [fps])
 
   return (
@@ -103,8 +103,8 @@ export default function FpsOverlay() {
         }`}
       >
         {visible && (
-          <div className="rounded border border-white/15 bg-black/60 px-3 py-2 backdrop-blur-md">
-            <div className="font-['Montserrat'] text-[9px] uppercase tracking-[0.22em] text-white/45">
+          <div className="rounded border border-[#F5F7F6]/15 bg-black/60 px-3 py-2 backdrop-blur-md">
+            <div className="font-['Bounded'] text-[9px] uppercase tracking-[0.22em] text-[#F5F7F6]/45">
               FPS
             </div>
             <div className={`font-bounded text-lg leading-none ${fpsColor}`}>{fps || '—'}</div>
@@ -114,10 +114,10 @@ export default function FpsOverlay() {
         <button
           type="button"
           onClick={toggle}
-          className={`rounded border px-3 py-2 font-['Montserrat'] text-[10px] uppercase tracking-[0.2em] transition-colors ${
+          className={`rounded border px-3 py-2 font-['Bounded'] text-[10px] uppercase tracking-[0.2em] transition-colors ${
             visible
-              ? 'border-[#EB0000] bg-[#EB0000]/20 text-white'
-              : 'border-white/20 bg-black/50 text-white/60 hover:border-[#EB0000]/60 hover:text-white'
+              ? 'border-[#E10600] bg-[#E10600]/20 text-[#F5F7F6]'
+              : 'border-[#F5F7F6]/20 bg-black/50 text-[#F5F7F6]/60 hover:border-[#E10600]/60 hover:text-[#F5F7F6]'
           }`}
           title="FPS: вкл/выкл (F)"
           aria-pressed={visible}

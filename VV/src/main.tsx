@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App.tsx'
 import PortfolioWorksPage from './pages/PortfolioWorksPage'
+import CookiePolicyPage from './pages/CookiePolicyPage'
 import LayoutGridOverlay from './components/LayoutGridOverlay'
 import FpsOverlay from './components/FpsOverlay'
+import CursorFx from './components/CursorFx'
 import './index.css'
 
 function isTypingTarget(target: EventTarget | null) {
@@ -34,7 +36,9 @@ function Root() {
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/portfolio" element={<PortfolioWorksPage />} />
+          <Route path="/cookie-policy" element={<CookiePolicyPage />} />
         </Routes>
+        <CursorFx />
         {/* Служебные оверлеи: скрыть/показать клавишей L */}
         {debugOverlaysVisible && (
           <>

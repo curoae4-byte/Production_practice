@@ -5,7 +5,7 @@ export function InstagramBannedNote() {
   return (
     <div className="flex w-full flex-col items-center">
       <svg
-        className="h-11 w-7 shrink-0 text-[#EB0000] drop-shadow-[0_0_12px_rgba(235,0,0,0.35)]"
+        className="h-11 w-7 shrink-0 text-[#E10600] drop-shadow-[0_0_12px_rgba(235,0,0,0.35)]"
         viewBox="0 0 28 52"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ export function InstagramBannedNote() {
           strokeLinejoin="round"
         />
       </svg>
-      <p className="max-w-[7.5rem] text-center font-['Bounded'] text-[7px] font-semibold uppercase leading-tight tracking-[0.12em] text-[#EB0000] sm:max-w-[8.5rem] sm:text-[8px] sm:tracking-[0.16em]">
+      <p className="max-w-[7.5rem] text-center font-['Bounded'] text-[7px] font-semibold uppercase leading-tight tracking-[0.12em] text-[#E10600] sm:max-w-[8.5rem] sm:text-[8px] sm:tracking-[0.16em]">
         ЗАПРЕЩЕНО В РФ
       </p>
     </div>

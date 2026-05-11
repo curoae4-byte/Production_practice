@@ -219,7 +219,13 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
                 </svg>
                 
                 {/* шум для "киношности" */}
-                <div className="absolute inset-0 z-20 pointer-events-none mix-blend-overlay opacity-20 bg-[url('https://res.cloudinary.com/dzv9u6v6p/image/upload/v1672689035/noise_qjzzjz.png')]" />
+                <div 
+                  className="absolute inset-0 z-20 pointer-events-none opacity-20 mix-blend-overlay" 
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                    backgroundSize: '180px 180px',
+                  }}
+                />
               </div>
             </motion.div>
           )}
@@ -267,11 +273,11 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
               className="text-center"
             >
               {/* проценты + полоска */}
-              <div className="text-3xl sm:text-4xl font-bounded text-[#EB0000] mb-4 tracking-tighter">
+              <div className="text-3xl sm:text-4xl font-bounded text-[#E10600] mb-4 tracking-tighter">
                 {progress}%
               </div>
-              <div className="w-40 sm:w-48 h-[1px] bg-white/10 relative">
-                <motion.div className="absolute inset-0 bg-[#EB0000]" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
+              <div className="w-40 sm:w-48 h-[1px] bg-[#F5F7F6]/10 relative">
+                <motion.div className="absolute inset-0 bg-[#E10600]" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
               </div>
             </motion.div>
           )}
@@ -288,11 +294,11 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
                 onClick={handleEnter}
                 whileHover={{ scale: 1.1, textShadow: '0 0 15px rgba(235,0,0,1)' }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative px-7 sm:px-9 md:px-12 py-3 sm:py-4 text-lg sm:text-xl md:text-2xl font-bounded tracking-[0.2em] sm:tracking-widest text-white overflow-hidden pointer-events-auto"
+                className="group relative px-7 sm:px-9 md:px-12 py-3 sm:py-4 text-lg sm:text-xl md:text-2xl font-bounded tracking-[0.2em] sm:tracking-widest text-[#F5F7F6] overflow-hidden pointer-events-auto"
               >
                 <span className="relative z-10">ВОЙТИ</span>
-                <div className="absolute inset-0 border border-[#EB0000] opacity-50 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute inset-0 bg-[#EB0000]/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 border border-[#E10600] opacity-50 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-[#E10600]/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
               </motion.button>
             </motion.div>
           )}

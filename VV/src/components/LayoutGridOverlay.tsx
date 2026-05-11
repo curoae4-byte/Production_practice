@@ -55,21 +55,21 @@ export function LayoutGridOverlay() {
           Внешняя рамка — граница всего контейнера (как у обёртки в коде).
           Внутренний блок на всю ширину между паддингами + border-x — линии «живого» контента.
         */}
-        <div className="relative flex h-full min-h-screen w-full max-w-7xl flex-col border-x border-dashed border-white/20 px-4 sm:px-6 lg:px-8">
+        <div className="relative flex h-full min-h-screen w-full max-w-7xl flex-col border-x border-dashed border-[#F5F7F6]/20 px-4 sm:px-6 lg:px-8">
           {/* Ровно та же внутренняя ширина, что у children в PageShell */}
-          <div className="relative h-full min-h-screen w-full border-x-2 border-dashed border-[#EB0000]/55 bg-[rgba(235,0,0,0.04)]">
-            <div className="pointer-events-none absolute inset-x-0 top-3 z-[1] px-2 font-['Montserrat'] text-[9px] leading-snug text-white/50 sm:text-[10px]">
-              <p className="uppercase tracking-[0.2em] text-[#EB0000]/90">PageShell</p>
-              <p className="mt-1 text-white/45">
-                <span className="text-white/70">max-w-7xl</span> (1280px max) ·{' '}
-                <span className="text-white/70">px-4 / sm:px-6 / lg:px-8</span>
+          <div className="relative h-full min-h-screen w-full border-x-2 border-dashed border-[#E10600]/55 bg-[rgba(235,0,0,0.04)]">
+            <div className="pointer-events-none absolute inset-x-0 top-3 z-[1] px-2 font-['Bounded'] text-[9px] leading-snug text-[#F5F7F6]/50 sm:text-[10px]">
+              <p className="uppercase tracking-[0.2em] text-[#E10600]/90">PageShell</p>
+              <p className="mt-1 text-[#F5F7F6]/45">
+                <span className="text-[#F5F7F6]/70">max-w-7xl</span> (1280px max) ·{' '}
+                <span className="text-[#F5F7F6]/70">px-4 / sm:px-6 / lg:px-8</span>
               </p>
-              <p className="mt-1 text-[8px] text-white/35 sm:text-[9px]">
+              <p className="mt-1 text-[8px] text-[#F5F7F6]/35 sm:text-[9px]">
                 Светлая пунктир снаружи — край контейнера · красная полоса — где лежит контент
               </p>
             </div>
 
-            <div className="pointer-events-none absolute inset-x-0 bottom-3 z-[1] px-2 text-center font-['Montserrat'] text-[8px] uppercase tracking-[0.25em] text-white/35 sm:text-[9px]">
+            <div className="pointer-events-none absolute inset-x-0 bottom-3 z-[1] px-2 text-center font-['Bounded'] text-[8px] uppercase tracking-[0.25em] text-[#F5F7F6]/35 sm:text-[9px]">
               Узкие колонки текста (напр. Hero max-w-6xl) — дополнительно внутри этой зоны
             </div>
           </div>
@@ -79,10 +79,10 @@ export function LayoutGridOverlay() {
       <button
         type="button"
         onClick={toggle}
-        className={`fixed bottom-5 left-5 z-[12000] rounded border px-3 py-2 font-['Montserrat'] text-[10px] uppercase tracking-[0.2em] transition-colors ${
+        className={`fixed bottom-5 left-5 z-[12000] rounded border px-3 py-2 font-['Bounded'] text-[10px] uppercase tracking-[0.2em] transition-colors ${
           visible
-            ? 'border-[#EB0000] bg-[#EB0000]/20 text-white'
-            : 'border-white/20 bg-black/50 text-white/60 hover:border-[#EB0000]/60 hover:text-white'
+            ? 'border-[#E10600] bg-[#E10600]/20 text-[#F5F7F6]'
+            : 'border-[#F5F7F6]/20 bg-black/50 text-[#F5F7F6]/60 hover:border-[#E10600]/60 hover:text-[#F5F7F6]'
         }`}
         title="Разметка PageShell: вкл/выкл (Shift+G)"
       >

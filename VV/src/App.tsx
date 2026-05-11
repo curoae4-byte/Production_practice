@@ -10,13 +10,58 @@ import About from './components/About'
 import Portfolio from './components/Portfolio'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import CookieBanner from './components/CookieBanner'
 
 // gsap + scrolltrigger: скролл-сцены (hero/about/contact) + синк с lenis
 gsap.registerPlugin(ScrollTrigger)
 
+// Вспомогательные функции для проверки срока жизни сохраненных данных
+const checkPreloaderDone = () => {
+  // Если мы перешли по внутренней навигации (через Header или Link),
+  // то прелоадер показывать не нужно
+  const isNavFromInternal = sessionStorage.getItem('vv-nav-from-internal') === 'true';
+  const isReferrerInternal = document.referrer && document.referrer.includes(window.location.origin);
+  
+  if (isNavFromInternal || isReferrerInternal) {
+    console.log('Internal navigation detected. Skipping preloader.')
+    sessionStorage.removeItem('vv-nav-from-internal') // Очищаем метку после использования
+    return true
+  }
+
+  // Если пользователь еще не сделал выбор по куки (ни accepted, ни declined),
+  // то прелоадер должен показываться каждый раз (возвращаем false)
+  const cookieConsent = localStorage.getItem('vv-cookie-consent')
+  if (!cookieConsent) {
+    console.log('No cookie consent found. Preloader will show every time.')
+    return false
+  }
+
+  const itemStr = localStorage.getItem('vv-preloader-done')
+  if (!itemStr) return false
+  try {
+    const item = JSON.parse(itemStr)
+    const timeLeft = item.expiry - Date.now()
+    
+    if (timeLeft <= 0) {
+      console.log('Preloader timer expired. Showing preloader...')
+      localStorage.removeItem('vv-preloader-done')
+      return false
+    }
+    
+    console.log(`Preloader skipped. Appears again in: ${Math.round(timeLeft / 1000)}s`)
+    return item.value === '1'
+  } catch {
+    return itemStr === '1'
+  }
+}
+
 function App() {
   //  загрузка/скролл/якоря
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(() => {
+    if (typeof window === 'undefined') return true
+    // Теперь прелоадер показывается по расписанию, даже если куки приняты
+    return !checkPreloaderDone()
+  })
   const lenisRef = useRef<Lenis | null>(null)
   const location = useLocation()
   const skipInitialHashScrollRef = useRef(true)
@@ -56,6 +101,22 @@ function App() {
       lenis.destroy()
       lenisRef.current = null
       gsap.ticker.remove(onTick)
+    }
+  }, [])
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === '[') {
+        localStorage.removeItem('vv-cookie-consent')
+        localStorage.removeItem('vv-preloader-done')
+        console.log('Cookie & Storage cleared. Reloading...')
+        window.location.reload()
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
     }
   }, [])
 
@@ -102,6 +163,27 @@ function App() {
   useEffect(() => {
     if (loading) return
 
+    const pendingSectionId = sessionStorage.getItem('vv-scroll-target')
+    if (pendingSectionId && location.pathname === '/') {
+      sessionStorage.removeItem('vv-scroll-target')
+      // Даем небольшую задержку, чтобы DOM успел прогрузиться
+      setTimeout(() => {
+        const target = document.getElementById(pendingSectionId)
+        if (!target) return
+        
+        const targetEl = target.closest('.pin-spacer') || target;
+        let top = targetEl.getBoundingClientRect().top + window.scrollY;
+        
+        if (pendingSectionId !== 'about') {
+          const headerOffset = 100
+          top -= headerOffset
+        }
+        
+        window.scrollTo({ top, behavior: 'smooth' })
+      }, 100)
+      return
+    }
+
     // после прелоадера не прыгаем сразу к hash, чтобы старт всегда был с hero
     if (skipInitialHashScrollRef.current) {
       skipInitialHashScrollRef.current = false
@@ -119,13 +201,15 @@ function App() {
     const headerOffset = 100
     const top = target.getBoundingClientRect().top + window.scrollY - headerOffset
     window.scrollTo({ top, behavior: 'smooth' })
-  }, [loading, location.hash])
+  }, [loading, location.pathname, location.hash])
 
   return (
-    <main className="bg-[#080808] text-white selection:bg-[#EB0000] selection:text-white">
+    <main className="bg-[#080808] text-[#F5F7F6] selection:bg-[#E10600] selection:text-[#F5F7F6]">
       {loading && <Preloader onComplete={() => {
         // прелоадер закончен — показываем сайт
         resetToTop()
+        const expiry = Date.now() + 24 * 60 * 60 * 1000 // 24 часа в миллисекундах
+        localStorage.setItem('vv-preloader-done', JSON.stringify({ value: '1', expiry }))
         setLoading(false)
       }} />}
 
@@ -141,6 +225,8 @@ function App() {
           <Footer />
         </div>
       </div>
+
+      <CookieBanner />
     </main>
   )
 }

@@ -82,7 +82,7 @@ const Contact = () => {
             ref={lineLeftRef}
             className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-white/25 origin-left"
           />
-          <span className="text-[10px] sm:text-xs font-['Montserrat'] uppercase tracking-[0.45em] text-white/30 shrink-0">
+          <span className="text-[10px] sm:text-xs font-['Bounded'] uppercase tracking-[0.45em] text-[#F5F7F6]/30 shrink-0">
             Поработаем?
           </span>
           <div
@@ -94,7 +94,7 @@ const Contact = () => {
         {/* Заголовок в минималистичном стиле */}
         <h2
           ref={headingRef}
-          className="text-[clamp(1.8rem,10vw,6.5rem)] font-bounded tracking-tight sm:tracking-tighter leading-[0.95] text-white mb-8 sm:mb-12"
+          className="text-[clamp(1.8rem,10vw,6.5rem)] font-bounded tracking-tight sm:tracking-tighter leading-[0.95] text-[#F5F7F6] mb-8 sm:mb-12"
         >
           СВЯЗЬ
         </h2>
@@ -102,7 +102,7 @@ const Contact = () => {
         {/* Подзаголовок */}
         <p
           ref={subRef}
-          className="max-w-xl text-sm sm:text-lg md:text-xl font-['Montserrat'] text-white/50 leading-relaxed uppercase tracking-[0.12em] mb-12 sm:mb-16"
+          className="max-w-xl text-sm sm:text-lg md:text-xl font-['Bounded'] text-[#F5F7F6]/50 leading-relaxed uppercase tracking-[0.12em] mb-12 sm:mb-16"
         >
           Пиши нам — обсудим идею,<br />
           сроки и что сделает контент незабываемым.
@@ -112,11 +112,11 @@ const Contact = () => {
         <a
           ref={btnRef}
           href="mailto:hello@valeryvisuals.com"
-          className="group relative inline-flex items-center gap-4 px-10 sm:px-14 py-5 sm:py-6 font-['Bounded'] font-light text-sm sm:text-base tracking-[0.25em] uppercase text-white overflow-hidden"
+          className="group relative inline-flex items-center gap-4 px-10 sm:px-14 py-5 sm:py-6 font-['Bounded'] font-light text-sm sm:text-base tracking-[0.25em] uppercase text-[#F5F7F6] overflow-hidden"
         >
           {/* Фоновый fill при ховере */}
-          <span className="absolute inset-0 border border-[#EB0000]/50 group-hover:border-[#EB0000] transition-colors duration-500" />
-          <span className="absolute inset-0 bg-[#EB0000] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+          <span className="absolute inset-0 border border-[#E10600]/50 group-hover:border-[#E10600] transition-colors duration-500" />
+          <span className="absolute inset-0 bg-[#E10600] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
 
           <span className="relative z-10 group-hover:text-black transition-colors duration-300">
             Написать нам
@@ -133,10 +133,10 @@ const Contact = () => {
         </a>
 
         {/* Нижняя линия с имейлом */}
-        <div className="mt-16 sm:mt-24 flex items-center gap-5 text-[10px] sm:text-xs font-['Montserrat'] uppercase tracking-[0.35em] text-white/20">
-          <div className="w-8 h-[1px] bg-white/20" />
+        <div className="mt-16 sm:mt-24 flex items-center gap-5 text-[10px] sm:text-xs font-['Bounded'] uppercase tracking-[0.35em] text-[#F5F7F6]/20">
+          <div className="w-8 h-[1px] bg-[#F5F7F6]/20" />
           <span>hello@valeryvisuals.com</span>
-          <div className="w-8 h-[1px] bg-white/20" />
+          <div className="w-8 h-[1px] bg-[#F5F7F6]/20" />
         </div>
       </PageShell>
 
